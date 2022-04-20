@@ -17,6 +17,10 @@ it will create a React project with the directory “project-folder-name”
 NOTE: once you made code changings the html page will update automatically at "localhost:3000"
 
 • Install "react-router-dom" allowing page redirects by using "useNavigate" --> npm install react-router-dom
+
+• Will be using "Material UI" npm package for icons use --> npm install @mui/icons-material
+https://mui.com/getting-started/installation/
+https://mui.com/components/icons/
 */
 
 import React from 'react';

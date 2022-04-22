@@ -1,13 +1,14 @@
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import {useNavigate} from 'react-router-dom';  //allows redirects (Remember to npm install react-router-dom)
 import Button from '@mui/material/Button'; //using material UI npm package Button
 import AddIcon from '@mui/icons-material/Add'; //using material UI npm package Icon
 
 function Postblog(props){
-    const [post, setPost] = useState({ title: "", content: ""}); 
+    const [post, setPost] = useState({ title: "", content: "", imgURL: ""}); 
+    const [image, setImage] = useState([]); //saving upload image data
 
-    //invoke useNavigate for page redirects 
-    const pageRedirect = useNavigate(); 
+    //useNavigate for page redirects 
+    const pageRedirect = useNavigate();
 
     //method to handle input and save the post input title & content state 
     function handleChange(event){
@@ -21,31 +22,52 @@ function Postblog(props){
         });
     }
 
+    //method to handle upload image changes
+    function imageChange(event){
+        setImage(event.target.files);  //event.target.files --> returns an array 
+    }
+
+    //called whenever upload image to convert the image into image url so we can use the image url to render the picture 
+    useEffect(() => {
+        if(image.length < 1){
+            return; //means no image and stop 
+        }
+
+        setPost(prevNote => {
+            return {
+                ...prevNote,
+                imgURL : URL.createObjectURL(image[0])
+            };
+        });
+
+    }, [image]);
+
     function submitPost(event){
-        //passing the new Post object to function "addPost" in App.jsx to be added 
+        //passing the new Post object to function "addPost" in App.jsx to be added to Posts array
         props.onAdd(post); 
 
-        //clearing the input tittle and content 
-        setPost({ title: "", content: ""}); 
+        //clearing the input title and content for next new post 
+        setPost({ title: "", content: "", imgURL: ""}); 
 
         //prevent page refreshing 
         event.preventDefault(); 
 
-        //redirect to Home page
+        //redirect to Home page and passing imageURL 
         pageRedirect("/");  
-
-        //to pass data during redirect 
-        //pageRedirect("/weatherreport", {state: Data});  
     }
 
     return (
         <div className="content-container">
             <div>
                 <h2>Compose</h2>
-                <form>
-                    <input className="form-control item" name="title" value={post.title} placeholder="Title" onChange={handleChange} type="text" required/>
+                <form onSubmit={submitPost}>
+                    <input className="form-control item" name="title" value={post.title} placeholder="Title" onChange={handleChange} required/>
                     <textarea className="form-control item" name="content" value={post.content} placeholder="Contents" rows="5" onChange={handleChange}/>
-                    <Button variant="contained" startIcon={<AddIcon/>} onClick={submitPost}>Add</Button>
+                    <input className="item" name="imgURL" type="file" onChange={imageChange}/>
+                    {/* if image array has imageURL then show preview image, if there is no this check it will display "alt"*/}
+                    {image.length > 0 && <img className="image-preview" src={post.imgURL} alt="Uploaded Preview"/>}
+                    <br/>
+                    <Button variant="contained" startIcon={<AddIcon/>} type="submit">Add</Button>
                 </form>
             </div>
         </div>

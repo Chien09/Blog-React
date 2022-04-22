@@ -17,6 +17,7 @@ function Home(props){
                     id={index} //for position of the object, used for deleting the correct object 
                     title={post.title}
                     content={post.content}
+                    imgURL={post.imgURL}
                     onDelete={deletePostFunction}
                 />
             ))}

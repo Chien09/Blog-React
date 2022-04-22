@@ -13,6 +13,7 @@ function Container(props){
         <div className="post-container item">
             <h4>{props.title}</h4>
             <p>{props.content}</p>
+            <img className="image-preview" src={props.imgURL} alt="Uploaded Pic"/>
             <Button variant="contained" startIcon={<DeleteIcon />} onClick={deleteClick}>Delete</Button>
         </div>
     );

@@ -4,7 +4,13 @@ import Button from '@mui/material/Button'; //using material UI npm package Butto
 import AddIcon from '@mui/icons-material/Add'; //using material UI npm package Icon
 
 function Postblog(props){
-    const [post, setPost] = useState({ title: "", content: "", imgURL: ""}); 
+    //Getting today's date --> Month-Day-Year 
+    const dateToday = new Date();
+    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; 
+    const month = months[dateToday.getMonth()];
+    const stringDate = `${month} ${dateToday.getDate()}, ${dateToday.getFullYear()}`;
+
+    const [post, setPost] = useState({ title: "", content: "", date: stringDate, imgURL: ""}); 
     const [image, setImage] = useState([]); //saving upload image data
 
     //useNavigate for page redirects 
@@ -59,7 +65,7 @@ function Postblog(props){
     return (
         <div className="content-container">
             <div>
-                <h2>Compose</h2>
+                <h2 className="cursive-font">Compose</h2>
                 <form onSubmit={submitPost}>
                     <input className="form-control item" name="title" value={post.title} placeholder="Title" onChange={handleChange} required/>
                     <textarea className="form-control item" name="content" value={post.content} placeholder="Contents" rows="5" onChange={handleChange}/>

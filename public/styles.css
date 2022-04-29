@@ -2,6 +2,10 @@ html {
     font-family: "Montserrat", sans-serif;
 }
 
+.cursive-font{
+    font-family: 'Oooh Baby', cursive;
+}
+
 a{
     color: black;
     text-decoration: none;
@@ -27,6 +31,11 @@ a{
     color: #ee5253 !important;
 }
 
+.nav-linesimage{
+    width: 600px;
+    height: 50px;
+}
+
 .footer {
 	position: fixed;
 	text-align: center;
@@ -43,9 +52,19 @@ a{
     color: #fff;
 }
 
-.content-container {
-    margin: 5%;
+.content-container{
+    margin: 4%;
     padding-bottom: 15px;
+}
+
+.about-container{
+    text-align: center;
+
+    /*Centering the about <div> */
+    position: fixed;
+    top: 50%;
+    left: 46%;
+    transform: translate(-50%, -50%);
 }
 
 .item{
@@ -54,12 +73,33 @@ a{
 }
 
 .post-container{
-    border-style: solid;
-    border-color: black;
+    overflow-wrap: break-word; /* prevents text to overflow div or box */
+    position: relative; 
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3%;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 8px;
+    width: 60%;
     border-radius: 2%;
 }
 
+.delete-button{
+    position: absolute; /* To position at the bottom right corner the Parent Div must have "position: relative" */
+    right:    10px;
+    bottom:   10px;
+}
+
 .image-preview{
-    max-width: 250px;
-    max-height: 250px;
+    border-radius: 5%;
+    max-width: 235px;
+    max-height: 235px;
+}
+
+.post-date{
+    position: absolute; /* To position at the top right corner the Parent Div must have "position: relative" */
+    right:    10px;
+    top:   10px;
+    font-size: smaller;
 }

@@ -21,6 +21,19 @@ NOTE: once you made code changings the html page will update automatically at "l
 • Will be using "Material UI" npm package for icons use --> npm install @mui/icons-material
 https://mui.com/getting-started/installation/
 https://mui.com/components/icons/
+
+• Install Express, EJS, body-parser --> npm i express ejs body-parser 
+
+• Using "dotenv" enviornment variable to keep our password/link string safe, install --> npm i dotenv
+NEED to create a file ".env" to store the SECRET or other important Keys like API Key using command --> touch .env
+IMPORTANT!!!! DO NOT upload ".env" to respository, need to include it in ".gitignore" file
+Reference dotenv --> https://www.npmjs.com/package/dotenv
+
+• Install Mongoose --> npm install mongoose 
+
+• When testing Server (node app) and FrontEnd (npm start) need to install --> npm i cors 
+  -so no warnings will come up such as "Origin http://localhost:3000 is not allowed by Access-Control-Allow-Origin."
+  -essentiall using cors allows "same-origin policy" --> https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9
 */
 
 import React from 'react';

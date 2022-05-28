@@ -49,14 +49,14 @@ function Postblog(props){
     }, [image]);
 
     function submitPost(event){
+        //prevent page refreshing 
+        event.preventDefault(); 
+
         //passing the new Post object to function "addPost" in App.jsx to be added to Posts array
         props.onAdd(post); 
 
         //clearing the input title and content for next new post 
         setPost({ title: "", content: "", imgURL: ""}); 
-
-        //prevent page refreshing 
-        event.preventDefault(); 
 
         //redirect to Home page and passing imageURL 
         pageRedirect("/");  

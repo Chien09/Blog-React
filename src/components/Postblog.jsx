@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';  //allows redirects (Remember to npm install react-router-dom)
 import Button from '@mui/material/Button'; //using material UI npm package Button
 import AddIcon from '@mui/icons-material/Add'; //using material UI npm package Icon
+import FileBase64 from 'react-file-base64'; //uploading and converting image file to base64
 
 function Postblog(props){
     //Getting today's date --> Month-Day-Year 
@@ -29,11 +30,12 @@ function Postblog(props){
     }
 
     //method to handle upload image changes
-    function imageChange(event){
-        setImage(event.target.files);  //event.target.files --> returns an array 
+    function imageChange(file){
+        //console.log(file.base64); 
+        setImage(file.base64); 
     }
 
-    //called whenever upload image to convert the image into image url so we can use the image url to render the picture 
+    //called whenever upload or change image to render the preview picture 
     useEffect(() => {
         if(image.length < 1){
             return; //means no image and stop 
@@ -42,7 +44,7 @@ function Postblog(props){
         setPost(prevNote => {
             return {
                 ...prevNote,
-                imgURL : URL.createObjectURL(image[0])
+                imgURL : image
             };
         });
 
@@ -69,9 +71,11 @@ function Postblog(props){
                 <form onSubmit={submitPost}>
                     <input className="form-control item" name="title" value={post.title} placeholder="Title" onChange={handleChange} required/>
                     <textarea className="form-control item" name="content" value={post.content} placeholder="Contents" rows="5" onChange={handleChange}/>
-                    <input className="item" name="imgURL" type="file" onChange={imageChange}/>
-                    {/* if image array has imageURL then show preview image, if there is no this check it will display "alt"*/}
+                    {/*Upload image button to convert to base64*/}
+                    <FileBase64 type="file" multiple={false} onDone={imageChange}/>
+                    {/* if image array has imageURL then show preview image,else will display "alt"*/}
                     {image.length > 0 && <img className="image-preview" src={post.imgURL} alt="Uploaded Preview"/>}
+                    <br/>
                     <br/>
                     <Button variant="contained" startIcon={<AddIcon/>} type="submit">Add</Button>
                 </form>

@@ -7,6 +7,10 @@ import { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'; //allowing redirects to page components using React so it doesn't need to request to server
 import axios from "axios"; 
 
+//Toast imports --> https://fkhadra.github.io/react-toastify/installation
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   const [postsData, setPostsData] = useState([{
     title: "",
@@ -16,9 +20,13 @@ function App() {
   }]); 
 
   function addPost(newPost){
-
-    //using axios to post the new blog through --> router.route("/create")
-    axios.post("http://localhost:3001/create", newPost);
+    //using axios to post the new blog to MongoDB Atlas through backend server --> router.route("/create")
+    axios.post("http://localhost:3001/create", newPost)
+      .catch((error) => {
+        //show error toast 
+        toast.error("Could not POST or SAVE new blog post to cloud database, due to connection problem. Please try again.");
+        console.log(error);
+    });
 
     // setPostsData(prevNotes => {
     //     return [...prevNotes, newPost];
@@ -42,6 +50,18 @@ function App() {
   
   return (
     <div>
+      {/* Implementing error toast due to POST new blog error (Network)*/}
+      <ToastContainer position="top-center"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark"
+      />
       <Router>
         <Header />
         <Routes>

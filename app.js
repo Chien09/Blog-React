@@ -1,3 +1,6 @@
+//Backend Server
+
+
 //Enviornment variable to store password/links for encrpytion, this code must be on the very top 
 require('dotenv').config();
 
@@ -8,8 +11,9 @@ const cors = require("cors"); //for allowing "same-origin policy", so frontend c
 
 const app = express(); 
 
-//parse JSON data requests and puts it into request.body 
+//parse JSON data requests and puts it into request.body (for POST and PUT requests)
 app.use(express.json());
+//app.use(express.json({limit: "30mb",extended:true})); //allows uploading larger images with no error
 
 //body-parser can be used with express
 //urlencoded is to grab information or data from <form></form> 

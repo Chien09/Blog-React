@@ -103,3 +103,7 @@ a{
     top:   10px;
     font-size: smaller;
 }
+
+.error{
+    color: red;
+}

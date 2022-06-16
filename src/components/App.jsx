@@ -2,6 +2,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Home from './Home';
 import Postblog from './Postblog';
+import Editblog from './Edit'; 
 import About from './About'; 
 import { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'; //allowing redirects to page components using React so it doesn't need to request to server
@@ -16,11 +17,12 @@ function App() {
     title: "",
     content: "",
     date: "",
+    month: 0, //for sorting purposes
     imgURL: ""
   }]); 
 
   function addPost(newPost){
-    //using axios to post the new blog to MongoDB Atlas through backend server --> router.route("/create")
+    //axios to post the new blog to MongoDB Atlas through backend server --> router.route("/create")
     axios.post("http://localhost:3001/create", newPost)
       .catch((error) => {
         //show error toast 
@@ -33,12 +35,32 @@ function App() {
     // });
   }
 
-  function deleteNote(id){
-    setPostsData(prevNotes => {
-        return prevNotes.filter((post, index) => {
-            return index !== id; 
-        });
+  function updateBlog(id, blog){
+    //axios to post/update blog post at MongoDB Atlas through backend server --> router.route("/edit/:id")
+    axios.put(`/updateblog/${id}`, blog)
+    .then((response) => { console.log(`Blog Post ID:${id} has been update in the Database!`)})
+    .catch((error) => {
+      //show error toast 
+      toast.error("Could not UPDATE blog post in the database at the moment. Please try again.");
+      console.log(error); 
     });
+  }
+
+  function deleteBlog(id){
+    //axios to delete the blog post at MongoDB Atlas through backend server --> router.route("/delete/:id")
+    axios.delete(`http://localhost:3001/delete/${id}`)
+      .then((response) => {console.log(`Blog Post ID:${id} has been deleted from Database!`);})
+      .catch((error) => {
+        //show error toast 
+        toast.error("Could not DELETE blog post at the database at the moment. Please try again.");
+        console.log(error); 
+      });
+
+    // setPostsData(prevNotes => {
+    //     return prevNotes.filter((post, index) => {
+    //         return index !== id; 
+    //     });
+    // });
   }
 
   //fetch blogs data from Server where data is retrieved from MongoDB 
@@ -62,11 +84,13 @@ function App() {
       pauseOnHover
       theme="dark"
       />
+
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<Home data={postsData} onDelete={deleteNote}/>} />
+          <Route path="/" element={<Home data={postsData} onDelete={deleteBlog}/>} />
           <Route path="/postblog" element={<Postblog onAdd={addPost}/>} />
+          <Route path="/editblog" element={<Editblog onEdit={updateBlog}/>} />
           <Route path="/about" element={<About />} />
         </Routes>
         <Footer />

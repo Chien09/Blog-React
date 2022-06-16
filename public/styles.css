@@ -85,6 +85,12 @@ a{
     border-radius: 2%;
 }
 
+.edit-button{
+    position: absolute;
+    right: 120px;
+    bottom: 10px;
+}
+
 .delete-button{
     position: absolute; /* To position at the bottom right corner the Parent Div must have "position: relative" */
     right:    10px;

@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react'; 
-import {useNavigate} from 'react-router-dom';  //allows redirects (Remember to npm install react-router-dom)
+import {useNavigate, useLocation} from 'react-router-dom';  //allows redirects (Remember to npm install react-router-dom)
 import Button from '@mui/material/Button'; //using material UI npm package Button
-import AddIcon from '@mui/icons-material/Add'; //using material UI npm package Icon
+import UpgradeIcon from '@mui/icons-material/Upgrade'; //using material UI npm package Icon
 import FileBase64 from 'react-file-base64'; //uploading and converting image file to base64
+import axios from 'axios';
 
-function Postblog(props){
-    //Getting today's date --> Month-Day-Year 
-    const dateToday = new Date();
-    const months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; 
-    const month = months[dateToday.getMonth()];
-    const stringDate = `${month} ${dateToday.getDate()}, ${dateToday.getFullYear()}`;
+function Editblog(props){
+    const [post, setPost] = useState({ title: "", content: "", date: "", month: 0, imgURL: ""}); 
+    const [image, setImage] = useState([]);
 
-    const [post, setPost] = useState({ title: "", content: "", date: stringDate, month: dateToday.getMonth(), imgURL: ""}); 
-    const [image, setImage] = useState([]); //saving upload image data
+    //retrieve Blog ID passed from Container.jsx "editClick()"
+    const blogID = useLocation();
+
+    //Maybe Get request here to fetch the correct Blog from MongoDB?????? instead of using useEffect() 
 
     //useNavigate for page redirects 
     const pageRedirect = useNavigate();
@@ -35,6 +35,24 @@ function Postblog(props){
         setImage(file.base64); 
     }
 
+    //When first Render page Fetch/GET the correct blog from MongoDB
+    useEffect(() => {
+        axios.get(`http://localhost:3001/getblog/${blogID.state.blogID}`)
+            .then((response) => {
+               //console.log(response.data) 
+               setPost({
+                   title: response.data.title,
+                   content: response.data.content,
+                   date: response.data.date,
+                   month: response.data.month,
+                   imgURL: response.data.imgURL
+               }); 
+
+               setImage(response.data.imgURL);
+            })
+            .catch((error) => {console.log(error)})
+    }, []); 
+
     //called whenever upload or change image to render the preview picture 
     useEffect(() => {
         if(image.length < 1){
@@ -50,12 +68,12 @@ function Postblog(props){
 
     }, [image]);
 
-    function submitPost(event){
+    function updatePost(event){
         //prevent page refreshing 
         event.preventDefault(); 
 
-        //passing the new Post object to function "addPost" in App.jsx to be added to MongoDB
-        props.onAdd(post); 
+        //passing in the post/blog object to function "updateBlog()" in App.jsx to be updated in MongoDB
+        props.onEdit(blogID.state.blogID, post); 
 
         //redirect to Home page
         pageRedirect("/");  
@@ -64,21 +82,21 @@ function Postblog(props){
     return (
         <div className="content-container">
             <div>
-                <h2 className="cursive-font">Compose</h2>
-                <form onSubmit={submitPost}>
+                <h2 className="cursive-font">Edit Blog</h2>
+                <form onSubmit={updatePost}>
                     <input className="form-control item" name="title" value={post.title} placeholder="Title" onChange={handleChange} required/>
                     <textarea className="form-control item" name="content" value={post.content} placeholder="Contents" rows="5" onChange={handleChange}/>
                     {/*Upload image button to convert to base64*/}
                     <FileBase64 type="file" multiple={false} onDone={imageChange}/>
                     {/* if image array has imageURL then show preview image,else will display "alt"*/}
-                    {image.length > 0 && <img className="image-preview" src={post.imgURL} alt="Uploaded Preview"/>}
+                    { image.length > 0 && <img className="image-preview" src={post.imgURL} alt="Uploaded Preview"/>}
                     <br/>
                     <br/>
-                    <Button variant="contained" startIcon={<AddIcon/>} type="submit">Add</Button>
+                    <Button variant="contained" startIcon={<UpgradeIcon/>} type="submit">Update</Button>
                 </form>
             </div>
         </div>
     );
 }
 
-export default Postblog;
+export default Editblog;

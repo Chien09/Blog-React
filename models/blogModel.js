@@ -7,6 +7,7 @@ const blogSchema = new mongoose.Schema({
     title: String,
     content: String,
     date: String,
+    month: Number, //for sorting purposes
     imgURL: String
 });
 

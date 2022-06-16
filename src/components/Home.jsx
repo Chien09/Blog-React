@@ -5,7 +5,12 @@ function Home(props){
     const postsData = props.data;
     //console.log(postsData); 
 
-    //Get deletePostFunction passed from App.jsx
+    //sort posts based on month 
+    postsData.sort((a , b) => {
+        return a.month - b.month; 
+    });
+
+    //Get delete function passed from App.jsx
     const deletePostFunction = props.onDelete;
     
     return (
@@ -14,7 +19,7 @@ function Home(props){
             {postsData.map((post, index) => (
                 <Container 
                     key={index}
-                    id={index} //for position of the object, used for deleting the correct object 
+                    id={post._id} //_id is the MongoDB object id used for CRUD operations on the correct object 
                     title={post.title}
                     content={post.content}
                     date={post.date}

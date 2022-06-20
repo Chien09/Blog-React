@@ -14,8 +14,6 @@ it will create a React project with the directory “project-folder-name”
   o	Delete whatever code you will not use in the “index.js” file 
   o	START Coding away 
 
-NOTE: once you made code changings the html page will update automatically at "localhost:3000"
-
 • Install "react-router-dom" allowing page redirects by using "useNavigate" --> npm install react-router-dom
 
 • Will be using "Material UI" npm package for icons use --> npm install @mui/icons-material
@@ -34,6 +32,8 @@ Reference dotenv --> https://www.npmjs.com/package/dotenv
 • When testing Server (node app) and FrontEnd (npm start) need to install --> npm i cors 
   -so no warnings will come up such as "Origin http://localhost:3000 is not allowed by Access-Control-Allow-Origin."
   -essentiall using cors allows "same-origin policy" --> https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9
+
+• npm install axios 
 */
 
 import React from 'react';

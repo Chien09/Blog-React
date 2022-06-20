@@ -1,4 +1,4 @@
-//This is the data Mongoose Model for blog 
+//Data Mongoose Model for blog 
 
 const mongoose = require("mongoose");
 

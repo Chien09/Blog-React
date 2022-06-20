@@ -1,4 +1,4 @@
-//Contains the different Ruotes such as POST or Delete blog to/at MongoDB Atlas
+//Contains the different Ruotes for CRUD operations to data stored on MongoDB Atlas
 
  const express = require("express");
  const router = express.Router(); 

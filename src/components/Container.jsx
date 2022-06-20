@@ -1,11 +1,11 @@
 import Button from '@mui/material/Button'; //using material UI npm package Button
 import DeleteIcon from '@mui/icons-material/Delete';  //using material UI npm package Icon
 import EditIcon from '@mui/icons-material/Edit';
-import {useNavigate} from 'react-router-dom';  //allows redirects (Remember to npm install react-router-dom)
+import {useNavigate} from 'react-router-dom';  //allows redirects
 
 function Container(props){
 
-     //useNavigate for page redirects 
+    //for page redirects 
     const pageRedirect = useNavigate();
 
     //delete post
@@ -16,7 +16,7 @@ function Container(props){
 
     //edit post
     function editClick(){
-        //redirect to Edit Blog page passing the blog ID
+        //redirect to Edit Blog page passing the blog _id
         pageRedirect("/editblog", {state: {blogID: props.id}});  
     }
 

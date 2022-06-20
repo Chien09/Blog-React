@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'; 
-import {useNavigate, useLocation} from 'react-router-dom';  //allows redirects (Remember to npm install react-router-dom)
+import {useNavigate, useLocation} from 'react-router-dom'; 
 import Button from '@mui/material/Button'; //using material UI npm package Button
 import UpgradeIcon from '@mui/icons-material/Upgrade'; //using material UI npm package Icon
-import FileBase64 from 'react-file-base64'; //uploading and converting image file to base64
+import FileBase64 from 'react-file-base64'; //for uploading and converting image file to base64
 import axios from 'axios';
 
 function Editblog(props){
@@ -12,9 +12,7 @@ function Editblog(props){
     //retrieve Blog ID passed from Container.jsx "editClick()"
     const blogID = useLocation();
 
-    //Maybe Get request here to fetch the correct Blog from MongoDB?????? instead of using useEffect() 
-
-    //useNavigate for page redirects 
+    //for page redirects 
     const pageRedirect = useNavigate();
 
     //method to handle input and save the post input title & content state 
@@ -72,7 +70,7 @@ function Editblog(props){
         //prevent page refreshing 
         event.preventDefault(); 
 
-        //passing in the post/blog object to function "updateBlog()" in App.jsx to be updated in MongoDB
+        //passing in the blog _id and the blog object itself to function "updateBlog()" in App.jsx to be updated in MongoDB
         props.onEdit(blogID.state.blogID, post); 
 
         //redirect to Home page
@@ -88,7 +86,7 @@ function Editblog(props){
                     <textarea className="form-control item" name="content" value={post.content} placeholder="Contents" rows="5" onChange={handleChange}/>
                     {/*Upload image button to convert to base64*/}
                     <FileBase64 type="file" multiple={false} onDone={imageChange}/>
-                    {/* if image array has imageURL then show preview image,else will display "alt"*/}
+                    {/* if image array has imageURL then show preview image*/}
                     { image.length > 0 && <img className="image-preview" src={post.imgURL} alt="Uploaded Preview"/>}
                     <br/>
                     <br/>

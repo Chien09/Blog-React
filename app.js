@@ -90,25 +90,6 @@ const Blog = require("./models/blogModel");
 //     }
 // );
 
-//send blog Data to client 
-app.get("/", function(request, response){
-    //response.send("Express Server Here"); 
-
-    //Print all blog data from MongoDB Atlas 
-    Blog.find({}, function(err, blogs){
-        if(err){
-            console.log(err);
-        } else{
-            response.json(blogs); 
-        }
-    })
-
-    //OR 
-    // Blog.find({})
-    //     .then((blogs) => response.json(blogs))
-    //     .catch((err) => console.log(err)); 
-});
-
 //create server listening at port 3001 (Backend Server) The frontend is at port 3000 
 //IMPORTANT! Add "proxy": "http://localhost:3001" into "package.json" so frontEnd can communicate with backend server when project deployed onto Heroku
 app.listen(3001, function(){

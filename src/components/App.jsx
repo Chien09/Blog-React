@@ -22,7 +22,7 @@ function App() {
   }]); 
 
   function addPost(newPost){
-    //axios to POST new blog to MongoDB Atlas through--> router.route("/create")
+    //axios to POST new blog to MongoDB Atlas through backend server--> router.route("/create")
     axios.post("http://localhost:3001/create", newPost)
       .catch((error) => {
         //show error toast 
@@ -36,7 +36,7 @@ function App() {
   }
 
   function updateBlog(id, blog){
-    //axios to PUT/UPDATE blog at MongoDB Atlas through --> router.route("/edit/:id")
+    //axios to PUT/UPDATE blog at MongoDB Atlas through backend server--> router.route("/edit/:id")
     axios.put(`/updateblog/${id}`, blog)
     .then((response) => { console.log(`Blog Post ID:${id} has been update in the Database!`)})
     .catch((error) => {
@@ -46,7 +46,7 @@ function App() {
   }
 
   function deleteBlog(id){
-    //axios to DELETE blog at MongoDB Atlas through --> router.route("/delete/:id")
+    //axios to DELETE blog at MongoDB Atlas through backend server--> router.route("/delete/:id")
     axios.delete(`http://localhost:3001/delete/${id}`)
       .then((response) => {console.log(`Blog Post ID:${id} has been deleted from Database!`);})
       .catch((error) => {

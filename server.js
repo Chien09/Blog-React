@@ -1,9 +1,27 @@
-//Backend Server
+/*
+Backend Server
+
+• Install package.json --> npm init 
+
+• Install Express, EJS, body-parser --> npm i express ejs body-parser 
+
+• Using "dotenv" enviornment variable to keep our password/link string safe, install --> npm i dotenv
+NEED to create a file ".env" to store the SECRET or other important Keys like API Key using command --> touch .env
+IMPORTANT!!!! DO NOT upload ".env" to respository, need to include it in ".gitignore" file
+Reference dotenv --> https://www.npmjs.com/package/dotenv
+
+• Install Mongoose --> npm install mongoose 
+
+• When testing Server (node app) and FrontEnd (npm start) need to install --> npm i cors 
+  -so no warnings will come up such as "Origin http://localhost:3000 is not allowed by Access-Control-Allow-Origin."
+  -essentiall using cors allows "same-origin policy" --> https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9
+
+*/
 
 //Enviornment variable to separate secrets, this must be on the very top 
 require('dotenv').config();
 
-const express = require("express");
+const express = require("express"); //server framework 
 const bodyParser = require("body-parser"); //allowing to get the data sent from client side through <form></form>
 const mongoose = require("mongoose");
 const cors = require("cors"); //allowing "same-origin policy", so frontend can communicate with backend server 
@@ -14,14 +32,13 @@ const app = express();
 //app.use(express.json());
 app.use(express.json({limit: "30mb",extended:true})); //allows uploading larger images with no error
 
-//body-parser can be used with express
 //urlencoded is to grab information or data from <form></form> 
 //extended: true allows to POST nested objects
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(cors()); 
 
-//apply our custom Router for CRUD requests
+//apply our custom API Routes for CRUD requests
 app.use("/", require("./routes/allRoutes"));
 
 //Testing blogData at Mongoose Atlas
@@ -91,7 +108,7 @@ const Blog = require("./models/blogModel");
 // );
 
 //create server listening at port 3001 (Backend Server) The frontend is at port 3000 
-//IMPORTANT! Add "proxy": "http://localhost:3001" into "package.json" so frontEnd can communicate with backend server when project deployed onto Heroku
+//IMPORTANT! Add "proxy": "http://localhost:3001" into client's "package.json" so frontEnd can communicate with backend server when project deployed onto Heroku
 app.listen(3001, function(){
     console.log("Server is up and running at port 3001..."); 
 });

@@ -1,4 +1,4 @@
-//Contains the different Ruotes for CRUD operations to data stored on MongoDB Atlas
+//Contains the different API Ruotes for CRUD operations on the Database in MongoDB Atlas 
 
 const express = require("express");
 const router = express.Router(); 
@@ -41,7 +41,7 @@ router.route("/create").post((request, response) => {
     newBlog.save(); 
 });
 
-//Get blog to be edited 
+//GET blog to be edited 
 router.route("/getblog/:id").get((request, response) =>{
     const id = request.params.id;
 
@@ -49,18 +49,21 @@ router.route("/getblog/:id").get((request, response) =>{
         if(err){
             console.log(err);
         } else {
-            return response.json(blog); 
+            console.log("Successfully GET blog to be edited!");
+            response.json(blog); 
         }
     });
 }); 
 
-//Update the edited blog to MongoDB
+//UPDATE the edited blog to MongoDB
 router.route("/updateblog/:id").put((request, response) => {
     const id = request.params.id;
     const update = request.body; 
 
     Blog.findByIdAndUpdate(id, update, function(err, blog){
-        if(err){
+        if(!err){
+            console.log("Successfully UPDATED blog post!")
+        } else{
             console.log(err);
         }
     });
@@ -70,7 +73,9 @@ router.route("/updateblog/:id").put((request, response) => {
 router.route("/delete/:id").delete((request, response) => {
     Blog.findByIdAndRemove(request.params.id, function(err){
         if(!err){
-            console.log("Sucessfully deleted blog post!"); 
+            console.log("Successfully DELETED blog post!"); 
+        } else{
+            console.log(err); 
         }
     });
 });

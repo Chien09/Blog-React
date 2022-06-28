@@ -23,7 +23,9 @@ function App() {
 
   function addPost(newPost){
     //axios to POST new blog to MongoDB Atlas through backend server--> router.route("/create")
-    axios.post("http://localhost:3001/create", newPost)
+    //Make sure to change to http://localhost:3001/create when using app locally 
+    //As well as change to "proxy": "https://localhost:3001" in package.json
+    axios.post("https://daily-blog-9.herokuapp.com/create", newPost)
       .catch((error) => {
         //show error toast 
         toast.error("Could not POST or SAVE new blog post to cloud database, due to connection problem. Please try again.");
@@ -37,7 +39,9 @@ function App() {
 
   function updateBlog(id, blog){
     //axios to PUT/UPDATE blog at MongoDB Atlas through backend server--> router.route("/edit/:id")
-    axios.put(`/updateblog/${id}`, blog)
+    //Make sure to change to http://localhost:3001/updateblog/${id} when using app locally 
+    //As well as change to "proxy": "https://localhost:3001" in package.json
+    axios.put(`https://daily-blog-9.herokuapp.com/updateblog/${id}`, blog)
     .then((response) => { console.log(`Blog Post ID:${id} has been update in the Database!`)})
     .catch((error) => {
       toast.error("Could not UPDATE blog post in the database at the moment. Please try again.");
@@ -47,7 +51,9 @@ function App() {
 
   function deleteBlog(id){
     //axios to DELETE blog at MongoDB Atlas through backend server--> router.route("/delete/:id")
-    axios.delete(`http://localhost:3001/delete/${id}`)
+    //Make sure to change to http://localhost:3001/delete/${id} when using app locally 
+    //As well as change to "proxy": "https://localhost:3001" in package.json
+    axios.delete(`https://daily-blog-9.herokuapp.com/delete/${id}`)
       .then((response) => {console.log(`Blog Post ID:${id} has been deleted from Database!`);})
       .catch((error) => {
         toast.error("Could not DELETE blog post at the database at the moment. Please try again.");
@@ -62,8 +68,10 @@ function App() {
   }
 
   //fetch blogs data from Server where data is retrieved from MongoDB 
+  //Make sure to change to http://localhost:3001/getblogs when using app locally 
+  //As well as change to "proxy": "https://localhost:3001" in package.json
   useEffect(() => {
-    fetch("http://localhost:3001/")
+    fetch("https://daily-blog-9.herokuapp.com/getblogs")
       .then((res) => res.json())
       .then((jsonRes) => setPostsData(jsonRes)); 
   }, [postsData]);

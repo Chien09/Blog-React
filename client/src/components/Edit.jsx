@@ -34,8 +34,10 @@ function Editblog(props){
     }
 
     //When first Render page Fetch/GET the correct blog from MongoDB
+    //Make sure to change to http://localhost:3001/getblogs when using app locally 
+    //As well as change to "proxy": "https://localhost:3001" in package.json
     useEffect(() => {
-        axios.get(`http://localhost:3001/getblog/${blogID.state.blogID}`)
+        axios.get(`https://daily-blog-9.herokuapp.com/getblog/${blogID.state.blogID}`)
             .then((response) => {
                //console.log(response.data) 
                setPost({

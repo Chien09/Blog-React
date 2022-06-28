@@ -5,7 +5,7 @@ const router = express.Router();
 const Blog = require("../models/blogModel"); //get the blog Data mongoose schema model 
 
 //GET all blogs Data from MongoDB Atlas 
-router.route("/").get((request, response) => {
+router.route("/getblogs").get((request, response) => {
     //response.send("Express Server Here"); 
 
     Blog.find({}, function(err, blogs){

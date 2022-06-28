@@ -16,6 +16,8 @@ Reference dotenv --> https://www.npmjs.com/package/dotenv
   -so no warnings will come up such as "Origin http://localhost:3000 is not allowed by Access-Control-Allow-Origin."
   -essentiall using cors allows "same-origin policy" --> https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9
 
+
+WEBSITE LINK: https://daily-blog-9.herokuapp.com
 */
 
 //Enviornment variable to separate secrets, this must be on the very top 
@@ -85,10 +87,10 @@ mongoose.connect(
     }
 ); 
 
-const Blog = require("./models/blogModel"); 
+//const Blog = require("./models/blogModel"); 
 
-//insert testing blogData into MongoDB Atlas, we only want to do this once 
-//will be stored "reactblogDB" collections in MongoDB Atlas
+//insert testing blogData into MongoDB Atlas
+//will be stored in "reactblogDB" collections in MongoDB Atlas
 // blogs.forEach( 
 //     blog => {
 //         const blogObject = new Blog({
@@ -107,8 +109,58 @@ const Blog = require("./models/blogModel");
 //     }
 // );
 
-//create server listening at port 3001 (Backend Server) The frontend is at port 3000 
-//IMPORTANT! Add "proxy": "http://localhost:3001" into client's "package.json" so frontEnd can communicate with backend server when project deployed onto Heroku
-app.listen(3001, function(){
-    console.log("Server is up and running at port 3001..."); 
+/*
+HEROKU deployment setup 
+• delete .git and .gitignore in the client folder by using this command --> rm -fr .git 
+• create .gitignore at root folder 
+• create Procfile at root folder (Telling Heroku how to run this server.js)
+• add scripts to package.json file (Heroku uses package.json to know which scripts to run and dependencies to install for the project to run)
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client"
+  }
+
+• OPTIONAL you can specify which node version to run example: 
+    "engines": {
+        "node": "10.16.0"
+    }
+• create .git in the root folder of the project --> git init 
+• access Heroku --> heroku login
+• create Heroku app --> heroku create project-name 
+• after heroku create copy the first address https://daily-blog-9.herokuapp.com to replace 
+the "proxy": "http://localhost:3001" in client's side "package.json" 
+• Make sure to change all the axios CRUD operations route path from http://localhost:3001/... to https://daily-blog-9.herokuapp.com/... in the client side in App.jsx file and Edit.jsx 
+• run build in client side --> npm run build 
+• connect to Heroku app created --> heroku git:remote -a daily-blog-9
+• commit project to repository --> git add . --> git commit -am "first upload"
+• then push the commit to heroku app --> git push heroku master
+
+References --> 
+https://www.freecodecamp.org/news/deploying-a-mern-application-using-mongodb-atlas-to-heroku/
+
+https://www.youtube.com/watch?v=ouZy7s7bHjw
+
+
+WEBSITE LINK: https://daily-blog-9.herokuapp.com
+
+*/
+
+const path = require('path');
+const port = process.env.PORT || 3001; //use dynamic port by Heroku, port 3001 is for local development use 
+
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static('client/build')); //include all assets and CSS from the 'build' folder  
+    app.get('*', (request, response) => {
+        response.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')); //load index.html from 'build' folder
+    });
+}
+
+//create server listening at port 3001 locally (Backend Server) The frontend is at port 3000 locally 
+//IMPORTANT! Add "proxy": "http://localhost:3001" into client's "package.json" so frontEnd can communicate with backend server 
+app.listen(port, function(err){
+    if(err){
+        return console.log(err); 
+    }
+    console.log(`Server is up and running at port ${port}...`); 
 });

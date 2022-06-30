@@ -1,6 +1,6 @@
 # Blog-React
 
-This is a blog MERN Web Application project. The website is built using React framework and JavaScript, as well as, HTML and CSS. React API tools used includes browser router, link, useNavigate, useLocation, useEffect, and hooks. Implemented all CRUD operations on the database. 
+This is a blog Web Application project. The website is built using a MERN stack which includes the use of React framework, JavaScript, Node, MongoDB Atlas, as well as, HTML and CSS. React API tools used includes browser router, link, useNavigate, useLocation, useEffect, and other hooks. Implemented all CRUD operations on the database. 
 
 Website Link (Project is deployed onto Heroku) --> https://react-weather-web-application.herokuapp.com
 

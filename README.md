@@ -2,7 +2,7 @@
 
 This is a blog Web Application project. The website is built using a MERN stack which includes the use of React framework, JavaScript, Node, MongoDB Atlas, as well as, HTML and CSS. React API tools used includes browser router, link, useNavigate, useLocation, useEffect, and other hooks. Implemented all CRUD operations on the database. 
 
-Website Link (Project is deployed onto Heroku) --> https://react-weather-web-application.herokuapp.com
+Website Link (Project is deployed onto Heroku) --> https://daily-blog-9.herokuapp.com
 
 If running the project locally, make sure to install all npm dependencies by running command --> npm install 
 
